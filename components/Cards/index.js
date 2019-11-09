@@ -20,25 +20,36 @@
 
 const articleParent = document.querySelector(".cards-container");
 
-axios.get("https://lambda-times-backend.herokuapp.com/articles").then(res => {
-  const newArticle = res.data.articles;
+axios
+  .get("https://lambda-times-backend.herokuapp.com/articles")
+  .then(res => {
+    const newArticle = Object.values(res.data.articles);
+    console.log(newArticle);
+    newArticle.forEach(element => {
+      element.forEach(article => {
+        articleParent.appendChild(Article(article));
+      });
+    });
 
-  newArticle.bootstrap.forEach(element => {
-    articleParent.append(Article(element));
+    // newArticle.bootstrap.forEach(element => {
+    //   articleParent.append(Article(element));
+    // });
+    // newArticle.javascript.forEach(element => {
+    //   articleParent.append(Article(element));
+    // });
+    // newArticle.jquery.forEach(element => {
+    //   articleParent.append(Article(element));
+    // });
+    // newArticle.node.forEach(element => {
+    //   articleParent.append(Article(element));
+    // });
+    // newArticle.javascript.forEach(element => {
+    //   articleParent.append(Article(element));
+    // });
+  })
+  .catch(err => {
+    console.log("Error gathering data", err);
   });
-  newArticle.javascript.forEach(element => {
-    articleParent.append(Article(element));
-  });
-  newArticle.jquery.forEach(element => {
-    articleParent.append(Article(element));
-  });
-  newArticle.node.forEach(element => {
-    articleParent.append(Article(element));
-  });
-  newArticle.javascript.forEach(element => {
-    articleParent.append(Article(element));
-  });
-});
 function Article(articleContent) {
   // Creating Elements
   const card = document.createElement("div");
